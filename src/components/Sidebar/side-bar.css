@@ -1,0 +1,108 @@
+.sidebar {
+  z-index: 10;
+  position: fixed;
+  height: 100vh;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: width 0.25s ease;
+}
+.close {
+  width: 50px;
+}
+
+.close .side-top .logo-name,
+.close .side-top img,
+.close .side-mid ul li span,
+.close .side-bot .user-name,
+.close .side-bot .logout {
+  display: none;
+}
+.side-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  text-decoration: underline;
+  font-weight: bold;
+  padding-top: 10px;
+  gap: 10px;
+}
+
+.side-top .menu {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.side-top img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.side-mid {
+  width: 100%;
+  margin-top: 25%;
+}
+.side-mid {
+  display: flex;
+  margin-top: 20%;
+}
+.close .side-mid {
+  margin-top: 85%;
+}
+.close .side-mid li {
+  width: 28px;
+  border-radius: 100%;
+}
+.side-mid ul li {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  height: 28px;
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.action {
+  background: #aaaaaa;
+  color: white;
+  border-radius: 28px 0 0 28px;
+}
+
+.side-mid ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.side-bot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.avatar * {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+}
+
+.side-bot .user-name {
+  text-align: center;
+  width: auto;
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.side-bot .logout {
+  color: white;
+}

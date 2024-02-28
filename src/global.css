@@ -67,6 +67,7 @@
 }
 
 @layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,700;1,700&display=swap");
   * {
     @apply border-border;
   }
@@ -74,11 +75,26 @@
     @apply bg-background text-foreground;
   }
 
-  .login-main, .login-button {
+  .login-main,
+  .login-button,
+  .logo,
+  .side-bot,
+  .side-img {
     background: linear-gradient(
       150deg,
       rgba(238, 37, 37, 1) 0%,
       rgba(253, 187, 45, 1) 100%
     );
+  }
+
+  .font-family {
+    font-family: "Rubik", sans-serif;
+  }
+  .font {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.3rem;
   }
 }

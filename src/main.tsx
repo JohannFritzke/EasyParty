@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {LoginPage} from './pages/LoginPage'
+import { RouterProvider } from 'react-router-dom'
+import {router} from "./routes.tsx"
 import "./global.css"
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <LoginPage />
+    <RouterProvider router={router}/>
   </React.StrictMode>,
 )
