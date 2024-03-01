@@ -1,20 +1,14 @@
 .search {
-    display: flex;
-    gap: 5px;
-    position: relative;
-    top: 10px;
-    transition: right 0.3s ease;
-    z-index: 1;
-    left: 3%;
-    max-height: 35px;
-    color: black;
-  }
-  
-  .search .input{
-    background-color: white;
-    width: 240px;
-  }
-
-  .search .button{
-    color: white;
-  }
+  display: flex;
+  gap: 5px;
+  position: relative;
+  top: 10px;
+  transition: right 0.3s ease;
+  z-index: 1;
+  left: 3%;
+  max-height: 35px;
+  color: black;
+}
+.search .button {
+  color: white;
+}

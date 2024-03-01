@@ -7,10 +7,10 @@ import {
   PartyPopper,
   Star,
   Settings,
-  Hand,
 } from "lucide-react";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Profile } from "../profile";
 
 import logo from "../../img/logoo-new-png.png";
 import "./side-bar.css";
@@ -81,7 +81,9 @@ export function Sidebar() {
                 <span>Settings</span>
               </li>
             </DialogTrigger>
-            <DialogContent></DialogContent>
+            <DialogContent>
+              <Profile />
+            </DialogContent>
           </Dialog>
         </ul>
       </div>

@@ -66,7 +66,7 @@
   cursor: pointer;
 }
 
-.option{
+.option {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,12 +74,6 @@
 }
 .divider {
   margin-top: -10px;
-}
-
-.action {
-  background: #aaaaaa;
-  color: white;
-  border-radius: 28px 0 0 28px;
 }
 
 .side-mid ul {

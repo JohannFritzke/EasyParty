@@ -7,8 +7,14 @@ import "./search.css";
 export function Search() {
   return (
     <div className="search">
-      <Input placeholder="Search..." className="input" type="search"/>
-      <Button className="bg-easy button"><SearchBar/></Button>
+      <Input
+        placeholder="Search..."
+        className="bg-background w-[240px]"
+        type="search"
+      />
+      <Button className="bg-easy button">
+        <SearchBar />
+      </Button>
     </div>
   );
 }
