@@ -9,7 +9,7 @@ export function Profile() {
 
   return (
     <div className="flex flex-col justify-center items-center gap-[10px]">
-      <div>
+      <div className="flex flex-col gap-[10px]">
         <div className="flex items-center justify-between h-[50px]">
           <h1 className="font-bold">Edit Profile</h1>
           <Avatar
@@ -25,6 +25,7 @@ export function Profile() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
+
         <div className="flex gap-[10px]">
           <div>
             <span>First Name</span>
