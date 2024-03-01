@@ -33,7 +33,7 @@ export function LoginPage() {
         <CardContent className="text-white bg-easy w-full rounded-r-xl rounded-l-[100px] flex flex-col items-center gap-[30px]">
           <img src={logo} alt="" className="w-[40%] mt-[30px]" />
           <h1 className="font-bold text-2xl">Welcome to EasyParty!!!</h1>
-          <p className="text-xl underline">EasyParty is easy</p>
+          <p className="text-xl underline">With EasyParty it's easy</p>
         </CardContent>
       </Card>
     </div>
