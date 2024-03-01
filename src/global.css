@@ -79,7 +79,8 @@
   .login-button,
   .logo,
   .side-bot,
-  .side-img {
+  .side-img,
+  .bg-easy {
     background: linear-gradient(
       150deg,
       rgba(238, 37, 37, 1) 0%,
@@ -96,5 +97,13 @@
     font-weight: 700;
     font-style: normal;
     font-size: 1.3rem;
+  }
+
+  .background-login {
+    background: linear-gradient(
+      150deg,
+      rgba(238, 37, 37, 1) 0%,
+      rgba(253, 187, 45, 1) 76%
+    );
   }
 }

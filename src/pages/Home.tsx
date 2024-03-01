@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Sidebar } from "@/components/Sidebar/side-bar";
+import { Sidebar } from "@/components/sidebar/side-bar";
+import { Search } from "../components/search/search";
+import { AddParty } from "@/components/add-party/add-party";
 
 export function Home() {
   const mapRef = useRef<L.Map | null>(null);
@@ -26,10 +28,15 @@ export function Home() {
       mapRef.current = mymap;
     }
   }, []);
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <ModeToggle />
-      <Sidebar/>
+      <div className="flex absolute w-full">
+        <ModeToggle />
+        <Sidebar />
+        <Search />
+        <AddParty />
+      </div>
       <div id="map" style={{ height: "100vh" }} className="z-0"></div>
     </ThemeProvider>
   );
