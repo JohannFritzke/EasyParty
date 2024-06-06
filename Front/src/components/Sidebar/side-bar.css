@@ -9,7 +9,7 @@
   transition: width 0.25s ease;
 }
 .close {
-  width: 50px;
+  width: 55px;
 }
 
 .close .side-top .logo-name,
@@ -97,6 +97,10 @@
   width: 42px;
   height: 42px;
   border-radius: 100%;
+}
+
+.close .avatar{
+  margin-left: 11%;
 }
 
 .side-bot .user-name {

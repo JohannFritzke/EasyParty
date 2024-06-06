@@ -9,7 +9,7 @@ export function Search() {
     <div className="search">
       <Input
         placeholder="Search..."
-        className="bg-background w-[240px]"
+        className="bg-background w-[240px] input"
         type="search"
       />
       <Button className="bg-easy button">

@@ -15,6 +15,8 @@ import { Profile } from "../profile";
 import logo from "../../img/logoo-new-png.png";
 import "./side-bar.css";
 
+import { Link } from "react-router-dom";
+
 export function Sidebar() {
   const [isSidebarClosed, setSidebarClosed] = useState(true);
 
@@ -94,7 +96,11 @@ export function Sidebar() {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <span className="user-name font-family">User Name</span>
-        <LogOut className="logout" />
+        <Link to="/">
+          <span className="cursor-pointer">
+            <LogOut className="logout" />
+          </span>
+        </Link>
       </div>
     </div>
   );
