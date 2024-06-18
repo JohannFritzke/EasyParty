@@ -1,8 +1,11 @@
 const express = require('express');
 const connection = require('./db.js'); // Certifique-se de que este caminho está correto
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
+
 app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
