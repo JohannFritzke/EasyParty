@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import logo from "../img/logoo-new-png.png";
 import { Instagram, Facebook, Twitter } from "lucide-react";
