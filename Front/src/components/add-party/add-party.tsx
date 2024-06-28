@@ -2,6 +2,7 @@ import { Plus } from "lucide-react";
 import "./add-party.css";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 export function AddParty() {
@@ -38,6 +39,8 @@ export function AddParty() {
               <Input placeholder="Informe o Endereço"></Input>
             </div>
           </div>
+
+          <Button className="mt-2 bg-easy">Salvar</Button>
         </form>
       </DialogContent>
     </Dialog>
