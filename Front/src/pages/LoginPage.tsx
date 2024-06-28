@@ -48,7 +48,7 @@ export function LoginPage() {
             <Input
               placeholder="Password"
               type="password"
-              className="w-full"
+              className="w-full mt-1"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
