@@ -13,11 +13,10 @@ export function AddParty() {
           <Plus />
         </div>
       </DialogTrigger>
-      <DialogContent>
-        <h1>Adicionar um novo Evento!!</h1>
-
-        <form action="" className="flex justify-center flex-col">
-          <div className="flex w-[90%] justify-between p-3">
+      <DialogContent className="flex flex-col items-center">
+        <h1>Adicionar um novo Evento</h1>
+        <form action="" className="flex flex-col w-[85%]">
+          <div className="flex w-full justify-between p-">
             <div>
               <p>Nome do Evento</p>
               <Input placeholder="Nome do Evento" />
@@ -33,14 +32,14 @@ export function AddParty() {
             </div>
           </div>
 
-          <div>
+          <div className="mt-2">
             <div>
               <p>Endereço</p>
               <Input placeholder="Informe o Endereço"></Input>
             </div>
           </div>
 
-          <Button className="mt-2 bg-easy">Salvar</Button>
+          <Button className="mt-3 bg-easy">Salvar</Button>
         </form>
       </DialogContent>
     </Dialog>
