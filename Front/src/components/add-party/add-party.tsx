@@ -6,6 +6,36 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
+const estadosBrasil = [
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+];
+
 export function AddParty() {
   const [address, setAddress] = useState({
     cep: "",
@@ -44,13 +74,17 @@ export function AddParty() {
     setNumber(e.target.value);
   };
 
+  const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAddress((prev) => ({ ...prev, state: e.target.value }));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const nomeDoEvento = formData.get("nomeDoEvento") as string;
     const dataDoEvento = formData.get("dataDoEvento") as string;
     const enderecoCompleto = `${address.street}, ${address.neighborhood}, ${address.city}, ${address.state}, ${number}`;
-    
+
     // Aqui você pode enviar os dados para o seu banco de dados
     console.log({
       nomeDoEvento,
@@ -80,7 +114,7 @@ export function AddParty() {
                 name="dataDoEvento"
                 type="datetime-local"
                 className={cn(
-                  "uppercase input-date border-input disabled:opacity-50"
+                  "uppercase input border-input disabled:opacity-50"
                 )}
               />
             </div>
@@ -110,12 +144,20 @@ export function AddParty() {
               </div>
               <div>
                 <p>Estado</p>
-                <Input
-                  placeholder="Estado"
+                <select
                   value={address.state}
-                  readOnly
-                  className="w-[50px]"
-                />
+                  onChange={handleStateChange}
+                  className="w-[100px] border rounded-md px-3 py-1 h-[36px] input"
+                >
+                  <option value="" disabled>
+                    Selecione
+                  </option>
+                  {estadosBrasil.map((estado) => (
+                    <option key={estado} value={estado}>
+                      {estado}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -136,7 +178,7 @@ export function AddParty() {
             </div>
           </div>
 
-          <Button type="submit" className="mt-3 bg-easy">
+          <Button type="submit" className="mt-3 bg-easy text-white ">
             Salvar
           </Button>
         </form>
