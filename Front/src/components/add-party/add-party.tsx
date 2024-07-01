@@ -1,42 +1,15 @@
-import { useState } from "react";
-import { Plus } from "lucide-react";
-import "./add-party.css";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useState, useEffect } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import axios from 'axios';
 
 const estadosBrasil = [
-  "AC",
-  "AL",
-  "AP",
-  "AM",
-  "BA",
-  "CE",
-  "DF",
-  "ES",
-  "GO",
-  "MA",
-  "MT",
-  "MS",
-  "MG",
-  "PA",
-  "PB",
-  "PR",
-  "PE",
-  "PI",
-  "RJ",
-  "RN",
-  "RS",
-  "RO",
-  "RR",
-  "SC",
-  "SP",
-  "SE",
-  "TO",
+  "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
 ];
 
-export function AddParty() {
+export function AddParty({ markerPosition, onClose, onAddEvent }) {
   const [address, setAddress] = useState({
     cep: "",
     street: "",
@@ -46,6 +19,14 @@ export function AddParty() {
   });
 
   const [number, setNumber] = useState("");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (markerPosition) {
+      console.log("Position:", markerPosition);
+      // Aqui você pode adicionar lógica para buscar o endereço usando geocodificação reversa se necessário
+    }
+  }, [markerPosition]);
 
   const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const cep = e.target.value;
@@ -78,32 +59,47 @@ export function AddParty() {
     setAddress((prev) => ({ ...prev, state: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!markerPosition) {
+      setMessage('A posição do marcador não está definida.');
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
     const nomeDoEvento = formData.get("nomeDoEvento") as string;
     const dataDoEvento = formData.get("dataDoEvento") as string;
-    const enderecoCompleto = `${address.street}, ${address.neighborhood}, ${address.city}, ${address.state}, ${number}`;
 
-    // Aqui você pode enviar os dados para o seu banco de dados
-    console.log({
+    const eventInfo = {
       nomeDoEvento,
       dataDoEvento,
-      endereco: enderecoCompleto,
-    });
+      cep: address.cep,
+      street: address.street,
+      neighborhood: address.neighborhood,
+      city: address.city,
+      state: address.state,
+      number,
+      latitude: markerPosition.lat,
+      longitude: markerPosition.lng,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:3000/adicionar-evento', eventInfo);
+      setMessage('Evento adicionado com sucesso!');
+      onAddEvent(eventInfo); // Chama a função para adicionar o evento ao mapa
+    } catch (error) {
+      setMessage('Erro ao adicionar o evento.');
+      console.error('Erro ao salvar o evento:', error);
+    }
   };
 
   return (
-    <Dialog>
-      <DialogTrigger>
-        <div className="add-party bg-easy">
-          <Plus />
-        </div>
-      </DialogTrigger>
+    <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="flex flex-col items-center w-[100rem]">
         <h1>Adicionar um novo Evento</h1>
         <form onSubmit={handleSubmit} className="flex flex-col w-[85%]">
-          <div className="flex w-full justify-between p-">
+          <div className="flex w-full justify-between">
             <div>
               <p>Nome do Evento</p>
               <Input name="nomeDoEvento" placeholder="Nome do Evento" />
@@ -182,6 +178,7 @@ export function AddParty() {
             Salvar
           </Button>
         </form>
+        {message && <p>{message}</p>}
       </DialogContent>
     </Dialog>
   );
