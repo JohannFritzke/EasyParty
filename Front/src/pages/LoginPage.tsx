@@ -39,7 +39,7 @@ export function LoginPage() {
             <Instagram />
           </div>
           <p>or use your username/e-mail and password</p>
-          <form onSubmit={handleLogin} className="w-[75%]">
+          <form onSubmit={handleLogin} className="w-[75%] flex flex-col items-center">
             <Input
               placeholder="Username or e-mail"
               className="w-full"
@@ -49,7 +49,7 @@ export function LoginPage() {
             <Input
               placeholder="Password"
               type="password"
-              className="w-full"
+              className="w-full mt-1"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -58,11 +58,6 @@ export function LoginPage() {
             </Button>
           </form>
           <p className="cursor underline">Forget Your Password?</p>
-          <Link to="/username/">
-            <Button className="login-button font-bold text-sm uppercase w-[140px] text-white mt-4">
-              Sign In
-            </Button>
-          </Link>
           {message && <p>{message}</p>}
         </CardContent>
         <CardContent className="text-white bg-easy w-full rounded-r-xl rounded-l-[100px] flex flex-col items-center gap-[30px]">

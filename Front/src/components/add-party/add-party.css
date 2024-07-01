@@ -1,5 +1,4 @@
-
-.add-party{
+.add-party {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -12,4 +11,35 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+  }
+  
+  .input {
+    display: flex;
+    width: 100%;
+    height: 2.25rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    background-color: transparent;
+    padding-left: 0.75rem; /* 12px */
+    padding-right: 0.75rem; /* 12px */
+    padding-top: 0.25rem; /* 4px */
+    padding-bottom: 0.25rem; /* 4px */
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .input:focus{
+    outline: none;
+    box-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    --tw-ring-color:black;
+  }
+  
+select:focus{
+  background-color:  hsl(var(--background));;
 }
+
