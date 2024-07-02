@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   LogOut,
   Menu,
@@ -15,10 +15,17 @@ import { Profile } from "../profile";
 import logo from "../../img/logoo-new-png.png";
 import "./side-bar.css";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export function Sidebar() {
   const [isSidebarClosed, setSidebarClosed] = useState(true);
+  const { userName } = useParams<{ userName: string }>();
+
+  const getInitials = (name: string) => {
+    const [firstName, lastName] = name.split(" ");
+    const initials = firstName.charAt(0) + (lastName ? lastName.charAt(0) : "");
+    return initials.toUpperCase();
+  };
 
   const toggleSidebar = () => {
     setSidebarClosed(!isSidebarClosed);
@@ -44,7 +51,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <HandHeart />
-                <span>For You</span>
+                <span>Para você</span>
               </li>
             </DialogTrigger>
             <DialogContent></DialogContent>
@@ -56,7 +63,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <PartyPopper />
-                <span>Your Parties</span>
+                <span>Suas Festas</span>
               </li>
             </DialogTrigger>
             <DialogContent></DialogContent>
@@ -68,7 +75,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <Star />
-                <span>Favorites</span>
+                <span>Favoritos</span>
               </li>
             </DialogTrigger>
             <DialogContent></DialogContent>
@@ -80,7 +87,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <Settings />
-                <span>Settings</span>
+                <span>Configurações</span>
               </li>
             </DialogTrigger>
             <DialogContent>
@@ -91,11 +98,13 @@ export function Sidebar() {
       </div>
 
       <div className="side-bot">
-        <Avatar className="avatar">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+        <Avatar className="">
+          <AvatarImage src={`https://github.com/${userName}.png`} className="" />
+          <AvatarFallback className="bg-gray-300">
+            {getInitials(userName ? getInitials(userName) : "")}
+          </AvatarFallback>
         </Avatar>
-        <span className="user-name font-family">User Name</span>
+        <span className="user-name font-family">{userName}</span>
         <Link to="/">
           <span className="cursor-pointer">
             <LogOut className="logout" />
