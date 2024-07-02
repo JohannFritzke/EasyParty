@@ -22,7 +22,7 @@ export function LoginPage() {
       });
       setMessage(response.data.message);
       if (response.data.success) {
-        navigate('/root');
+        navigate(`/${username}`);
       }
     } catch (error) {
       setMessage('Erro ao conectar ao servidor');
