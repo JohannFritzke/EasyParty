@@ -100,6 +100,18 @@ export function AddParty({ markerPosition, onClose, onAddEvent }) {
         <h1>Adicionar um novo Evento</h1>
         <form onSubmit={handleSubmit} className="flex flex-col w-[85%]">
           <div className="flex w-full justify-between">
+
+    <Dialog>
+      <DialogTrigger>
+        <div className="add-party bg-easy">
+          <Plus />
+        </div>
+      </DialogTrigger>
+      <DialogContent className="flex flex-col items-center">
+        <h1>Adicionar um novo Evento</h1>
+        <form action="" className="flex flex-col w-[85%]">
+          <div className="flex w-full justify-between p-">
+
             <div>
               <p>Nome do Evento</p>
               <Input name="nomeDoEvento" placeholder="Nome do Evento" />
@@ -174,9 +186,13 @@ export function AddParty({ markerPosition, onClose, onAddEvent }) {
             </div>
           </div>
 
+
           <Button type="submit" className="mt-3 bg-easy text-white ">
             Salvar
           </Button>
+
+          <Button className="mt-3 bg-easy">Salvar</Button>
+
         </form>
         {message && <p>{message}</p>}
       </DialogContent>
