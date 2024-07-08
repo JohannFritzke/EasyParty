@@ -21,20 +21,33 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/adicionar-evento', (req, res) => {
-  const { nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number } = req.body;
+  const { nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number, lat, lng } = req.body;
 
   const query = `
-    INSERT INTO events (nome_do_evento, data_do_evento, cep, street, neighborhood, city, state, number)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO eventos (nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number,lat,lng)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)
   `;
 
-  connection.query(query, [nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number], (err, result) => {
+  connection.query(query, [nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number, lat, lng], (err, result) => {
     if (err) {
       console.error('Erro ao adicionar o evento:', err);
       return res.status(500).send('Erro ao adicionar o evento');
     }
     res.status(200).send('Evento adicionado com sucesso');
   });
+});
+
+app.get('/get-events', (req, res) => {
+  const query = 'SELECT * FROM eventos';
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar eventos:', err);
+      res.status(500).json({ error: 'Erro ao buscar eventos' });
+      return;
+    }
+    res.json(results);
+  });
+
 });
 
 app.listen(3000, () => {

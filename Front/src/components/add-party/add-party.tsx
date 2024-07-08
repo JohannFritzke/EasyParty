@@ -3,13 +3,18 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import axios from 'axios';
+import axios from "axios";
+import est from "./estadosBrasil.json";
 
-const estadosBrasil = [
-  "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
-];
 
-export function AddParty({ markerPosition, onClose, onAddEvent }) {
+interface AddPartyProps {
+  onClose(): void;
+  onAddEvent(eventInfo: any): void;
+}
+export function AddParty({
+  onClose,
+  onAddEvent
+}: AddPartyProps) {
   const [address, setAddress] = useState({
     cep: "",
     street: "",
@@ -20,13 +25,6 @@ export function AddParty({ markerPosition, onClose, onAddEvent }) {
 
   const [number, setNumber] = useState("");
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    if (markerPosition) {
-      console.log("Position:", markerPosition);
-      // Aqui você pode adicionar lógica para buscar o endereço usando geocodificação reversa se necessário
-    }
-  }, [markerPosition]);
 
   const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const cep = e.target.value;
@@ -61,37 +59,51 @@ export function AddParty({ markerPosition, onClose, onAddEvent }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!markerPosition) {
-      setMessage('A posição do marcador não está definida.');
-      return;
-    }
-
+    
     const formData = new FormData(e.currentTarget);
     const nomeDoEvento = formData.get("nomeDoEvento") as string;
     const dataDoEvento = formData.get("dataDoEvento") as string;
+    const fullAddress = `${address.street}, ${address.city},${address.neighborhood}, ${address.state},Brasil`;
 
-    const eventInfo = {
-      nomeDoEvento,
-      dataDoEvento,
-      cep: address.cep,
-      street: address.street,
-      neighborhood: address.neighborhood,
-      city: address.city,
-      state: address.state,
-      number,
-      latitude: markerPosition.lat,
-      longitude: markerPosition.lng,
-    };
+    const response = await axios.get(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        fullAddress
+      )}`
+    );
+    console.log( `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      fullAddress
+    )}`)
 
-    try {
-      const response = await axios.post('http://localhost:3000/adicionar-evento', eventInfo);
-      setMessage('Evento adicionado com sucesso!');
-      onAddEvent(eventInfo); // Chama a função para adicionar o evento ao mapa
-    } catch (error) {
-      setMessage('Erro ao adicionar o evento.');
-      console.error('Erro ao salvar o evento:', error);
+    if(response.data.length >0){
+      const eventInfo = {
+        nomeDoEvento,
+        dataDoEvento,
+        cep: address.cep,
+        street: address.street,
+        neighborhood: address.neighborhood,
+        city: address.city,
+        state: address.state,
+        number,
+        lat: response.data[0].lat,
+        lng: response.data[0].lon,
+      };
+  
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/adicionar-evento",
+          eventInfo
+        );
+        onAddEvent(eventInfo);
+        onClose();
+        setMessage("Evento adicionado com sucesso!");
+      } catch (error) {
+        setMessage("Erro ao adicionar o evento.");
+        console.error("Erro ao salvar o evento:", error);
+      }
+    }else{
+      alert("Local não mapeado!!")
     }
+    
   };
 
   return (
@@ -110,7 +122,7 @@ export function AddParty({ markerPosition, onClose, onAddEvent }) {
                 name="dataDoEvento"
                 type="datetime-local"
                 className={cn(
-                  "uppercase input border-input disabled:opacity-50"
+                  "uppercase flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                 )}
               />
             </div>
@@ -148,7 +160,7 @@ export function AddParty({ markerPosition, onClose, onAddEvent }) {
                   <option value="" disabled>
                     Selecione
                   </option>
-                  {estadosBrasil.map((estado) => (
+                  {est.estadosBrasil.map((estado: string) => (
                     <option key={estado} value={estado}>
                       {estado}
                     </option>

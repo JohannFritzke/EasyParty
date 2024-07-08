@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '', // Campo de senha vazio se você não tiver configurado uma senha
-  database: 'easy_party_db'
+  database: 'easyparty'
 });
 
 connection.connect((err) => {

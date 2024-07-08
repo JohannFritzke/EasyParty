@@ -7,19 +7,33 @@ import { ModeToggle } from "../components/mode-toggle";
 import { Sidebar } from "../components/Sidebar/side-bar";
 import { Search } from "../components/search/search";
 import { AddParty } from "../components/add-party/add-party";
-import iconUrl from '../img/1.ico';
+import iconUrl from "../img/1.ico";
+import axios from "axios";
+
+interface EventInfo {
+  nomeDoEvento: string;
+  dataDoEvento: string;
+  cep: string;
+  street: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  number: string;
+  lat: number;
+  lng: number;
+}
 
 export function Home() {
-  const mapRef = useRef<L.Map | null>(null);
+  const mapRef = useRef<L.Map | any>(null); // Ref inicializado com null
   const [showAddParty, setShowAddParty] = useState(false);
   const [markerPosition, setMarkerPosition] = useState<L.LatLng | null>(null);
-  const [markers, setMarkers] = useState<{ marker: L.Marker, info: any }[]>([]); // Adicionando info para armazenar informações do evento
-
+  const [markers, setMarkers] = useState<{ marker: L.Marker; info: any }[]>([]);
+  
   const customIcon = new L.Icon({
     iconUrl: iconUrl,
-    iconSize: [32, 32], // Ajuste o tamanho do ícone conforme necessário
-    iconAnchor: [16, 32], // Âncora do ícone, o ponto onde o ícone é "ancorado" no mapa
-    popupAnchor: [0, -32], // Âncora do popup em relação ao ícone
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
   });
 
   useEffect(() => {
@@ -39,46 +53,71 @@ export function Home() {
         setShowAddParty(true);
       });
 
-      mapRef.current = mymap;
+      mapRef.current = mymap; // Atribuição de mymap a mapRef.current
     }
   }, []);
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/get-events");
+      const events: EventInfo[] = response.data; // Tipo explícito para events
 
-  const handleAddEvent = (eventInfo) => {
-    if (mapRef.current && markerPosition) {
-      const marker = L.marker(markerPosition, { icon: customIcon }).addTo(mapRef.current);
+      if (mapRef.current) {
+        events.forEach((event: EventInfo) => {
+          const marker = L.marker([event.lat, event.lng], {
+            icon: customIcon,
+          });
 
-      // Adiciona o listener de clique para mostrar as informações do evento
-      marker.on('click', () => {
-        const popupContent = `
-          <div>
-            <h3>${eventInfo.nomeDoEvento}</h3>
-            <p>Data: ${eventInfo.dataDoEvento}</p>
-            <p>CEP: ${eventInfo.cep}</p>
-            <p>Rua: ${eventInfo.street}</p>
-            <p>Bairro: ${eventInfo.neighborhood}</p>
-            <p>Cidade: ${eventInfo.city}</p>
-            <p>Estado: ${eventInfo.state}</p>
-            <p>Número: ${eventInfo.number}</p>
-          </div>
-        `;
-        marker.bindPopup(popupContent).openPopup();
-      });
+          const popupContent = `
+            <div>
+              <h3>${event.nomeDoEvento}</h3>
+              <p>Data: ${event.dataDoEvento}</p>
+              <p>CEP: ${event.cep}</p>
+              <p>Rua: ${event.street}</p>
+              <p>Bairro: ${event.neighborhood}</p>
+              <p>Cidade: ${event.city}</p>
+              <p>Estado: ${event.state}</p>
+              <p>Número: ${event.number}</p>
+            </div>
+          `;
+          marker.bindPopup(popupContent);
 
-      // Adiciona o listener de clique com o botão direito para remover o marcador
-      marker.on('contextmenu', () => {
-        mapRef.current?.removeLayer(marker);
-        setMarkers((prevMarkers) => prevMarkers.filter((m) => m.marker !== marker));
-      });
+          marker.on("contextmenu", () => {
+            if (mapRef.current) {
+              mapRef.current.removeLayer(marker);
+              setMarkers((prevMarkers) =>
+                prevMarkers.filter((m) => m.marker !== marker)
+              );
+            }
+          });
 
-      setMarkers((prevMarkers) => [...prevMarkers, { marker, info: eventInfo }]);
+          marker.addTo(mapRef.current); // Adicionar o marcador ao mapa
+
+          setMarkers((prevMarkers) => [
+            ...prevMarkers,
+            { marker, info: event },
+          ]);
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao buscar eventos:", error);
     }
-    setShowAddParty(false);
-    setMarkerPosition(null);
   };
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const handleClose = () => {
     setShowAddParty(false);
     setMarkerPosition(null);
+  };
+
+  const handleAddEvent = async (eventInfo: EventInfo) => {
+    try {
+      await axios.post("http://localhost:3000/adicionar-evento", eventInfo);
+      fetchEvents();
+    } catch (error) {
+      console.error("Erro ao adicionar evento:", error);
+    }
   };
 
   return (
@@ -88,7 +127,7 @@ export function Home() {
         <Sidebar />
         <Search />
         {showAddParty && markerPosition && (
-          <AddParty markerPosition={markerPosition} onClose={handleClose} onAddEvent={handleAddEvent} />
+          <AddParty onClose={handleClose} onAddEvent={handleAddEvent} />
         )}
       </div>
       <div id="map" style={{ height: "100vh" }} className="z-0"></div>
