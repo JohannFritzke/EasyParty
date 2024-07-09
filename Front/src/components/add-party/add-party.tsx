@@ -6,8 +6,6 @@ import { cn } from "@/lib/utils";
 import axios from "axios";
 import est from "./estadosBrasil.json";
 import { useParams } from "react-router-dom";
-import { eventNames } from "process";
-
 interface AddPartyProps {
   onClose(): void;
   onAddEvent(): void;
