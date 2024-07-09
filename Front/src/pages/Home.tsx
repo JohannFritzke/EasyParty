@@ -9,6 +9,8 @@ import { Search } from "../components/search/search";
 import { AddParty } from "../components/add-party/add-party";
 import iconUrl from "../img/1.ico";
 import axios from "axios";
+import { format } from 'date-fns';
+
 
 interface EventInfo {
   nomeDoEvento: string;
@@ -66,11 +68,11 @@ export function Home() {
           const marker = L.marker([event.lat, event.lng], {
             icon: customIcon,
           });
-
+          const formattedDate = format(new Date(event.dataDoEvento), 'dd/MM/yyyy HH:mm');
           const popupContent = `
             <div>
               <h3>${event.nomeDoEvento}</h3>
-              <p>Data: ${event.dataDoEvento}</p>
+              <p>Data: ${formattedDate}</p>
               <p>CEP: ${event.cep}</p>
               <p>Rua: ${event.street}</p>
               <p>Bairro: ${event.neighborhood}</p>
@@ -110,16 +112,7 @@ export function Home() {
     setShowAddParty(false);
     setMarkerPosition(null);
   };
-
-  const handleAddEvent = async (eventInfo: EventInfo) => {
-    try {
-      await axios.post("http://localhost:3000/adicionar-evento", eventInfo);
-      fetchEvents();
-    } catch (error) {
-      console.error("Erro ao adicionar evento:", error);
-    }
-  };
-
+  
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex absolute w-full">
@@ -127,7 +120,7 @@ export function Home() {
         <Sidebar />
         <Search />
         {showAddParty && markerPosition && (
-          <AddParty onClose={handleClose} onAddEvent={handleAddEvent} />
+          <AddParty onClose={handleClose} onAddEvent={()=>fetchEvents()} />
         )}
       </div>
       <div id="map" style={{ height: "100vh" }} className="z-0"></div>

@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Profile } from "../profile";
+import logo from "../../img/logoo-new-png.png";
+import "./side-bar.css";
+import { Link, useParams } from "react-router-dom";
 import {
   LogOut,
   Menu,
@@ -8,14 +13,7 @@ import {
   Star,
   Settings,
 } from "lucide-react";
-
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Profile } from "../profile";
-
-import logo from "../../img/logoo-new-png.png";
-import "./side-bar.css";
-
-import { Link, useParams } from "react-router-dom";
+import { EventLister } from "../event-lister";
 
 export function Sidebar() {
   const [isSidebarClosed, setSidebarClosed] = useState(true);
@@ -66,7 +64,9 @@ export function Sidebar() {
                 <span>Suas Festas</span>
               </li>
             </DialogTrigger>
-            <DialogContent></DialogContent>
+            <DialogContent className="max-w-[55%]">
+              <EventLister/>
+            </DialogContent>
           </Dialog>
 
           <hr className="divider" />
@@ -99,7 +99,10 @@ export function Sidebar() {
 
       <div className="side-bot">
         <Avatar className="">
-          <AvatarImage src={`https://github.com/${userName}.png`} className="" />
+          <AvatarImage
+            src={`https://github.com/${userName}.png`}
+            className=""
+          />
           <AvatarFallback className="bg-gray-300">
             {getInitials(userName ? getInitials(userName) : "")}
           </AvatarFallback>

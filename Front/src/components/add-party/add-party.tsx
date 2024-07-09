@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import est from "./estadosBrasil.json";
-
+import { useParams } from "react-router-dom";
+import { eventNames } from "process";
 
 interface AddPartyProps {
   onClose(): void;
-  onAddEvent(eventInfo: any): void;
+  onAddEvent(): void;
 }
 export function AddParty({
   onClose,
@@ -25,6 +26,7 @@ export function AddParty({
 
   const [number, setNumber] = useState("");
   const [message, setMessage] = useState("");
+  const user=useParams<{ userName: string }>();
 
   const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const cep = e.target.value;
@@ -86,14 +88,14 @@ export function AddParty({
         number,
         lat: response.data[0].lat,
         lng: response.data[0].lon,
-      };
-  
+        user:user.userName,
+      }; 
       try {
-        const response = await axios.post(
+        await axios.post(
           "http://localhost:3000/adicionar-evento",
           eventInfo
         );
-        onAddEvent(eventInfo);
+        onAddEvent();
         onClose();
         setMessage("Evento adicionado com sucesso!");
       } catch (error) {

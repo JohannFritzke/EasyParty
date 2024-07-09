@@ -21,14 +21,13 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/adicionar-evento', (req, res) => {
-  const { nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number, lat, lng } = req.body;
+  const { nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number, lat, lng, user } = req.body;
 
   const query = `
-    INSERT INTO eventos (nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number,lat,lng)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)
+    INSERT INTO eventos (nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number,lat,lng,user)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?)
   `;
-
-  connection.query(query, [nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number, lat, lng], (err, result) => {
+  connection.query(query, [nomeDoEvento, dataDoEvento, cep, street, neighborhood, city, state, number, lat, lng, user], (err, result) => {
     if (err) {
       console.error('Erro ao adicionar o evento:', err);
       return res.status(500).send('Erro ao adicionar o evento');
@@ -49,6 +48,21 @@ app.get('/get-events', (req, res) => {
   });
 
 });
+
+app.get('/get-events-user', (req, res) => {
+  const { userName } = req.query; // Recebe o nome do usuário via query string
+  // Query SQL modificada para filtrar eventos por usuário
+  const query = 'SELECT * FROM eventos WHERE user = ?';
+  connection.query(query, [userName], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar eventos:', err);
+      res.status(500).json({ error: 'Erro ao buscar eventos' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
