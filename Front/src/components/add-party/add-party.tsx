@@ -8,6 +8,7 @@ import est from "./estadosBrasil.json";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
+import "./add-party.css"
 
 interface AddPartyProps {
   onClose(): void;
