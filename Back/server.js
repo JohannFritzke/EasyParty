@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+  const query = 'SELECT * FROM users WHERE firstName = ? AND password = ?';
   connection.query(query, [username, password], (err, results) => {
     if (err) throw err;
     if (results.length > 0) {
@@ -60,6 +60,23 @@ app.get('/get-events-user', (req, res) => {
       return;
     }
     res.json(results);
+  });
+});
+
+app.post('/register', (req, res) => {
+  const { firstName, lastName, dateOfBirth, email, gender, password, telephone} = req.body;
+  if(dateOfBirth == null){dateOfBirth=""}
+  const tipo="admin"
+  const query = `
+    INSERT INTO users (firstName, lastName, dateOfBirth, email, gender, password, telephone,tipo)
+    VALUES (?,?,?,?,?,?,?,?)
+  `;
+  connection.query(query, [firstName, lastName, dateOfBirth, email, gender, password, telephone,tipo], (err, result) => {
+    if (err) {
+      console.error('Erro ao adicionar o usuario:', err);
+      return res.status(500).send('Erro ao adicionar o usuario');
+    }
+    res.status(200).send('usuario adicionado com sucesso');
   });
 });
 

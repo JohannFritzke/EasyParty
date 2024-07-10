@@ -181,7 +181,7 @@ export function AddParty({ onClose, onAddEvent }: AddPartyProps) {
               </div>
             </div>
 
-            <Button type="submit" className="mt-3 bg-easy text-white ">
+            <Button type="submit" className="mt-3 bg-easy text-white">
               Salvar
             </Button>
           </form>
