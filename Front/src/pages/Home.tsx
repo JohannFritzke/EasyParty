@@ -127,7 +127,7 @@ export function Home() {
       </div>
       <div id="map" style={{ height: "100vh" }} className="z-0"></div>
 
-      {showSuccessToast && <ToastContainer autoClose={3000} className="z-50" />}
+      {showSuccessToast && <ToastContainer autoClose={2000} className="z-50" />}
     </ThemeProvider>
   );
 }

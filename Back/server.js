@@ -76,7 +76,7 @@ app.post('/register', (req, res) => {
       console.error('Erro ao adicionar o usuario:', err);
       return res.status(500).send('Erro ao adicionar o usuario');
     }
-    res.status(200).send('usuario adicionado com sucesso');
+    res.status(200).send('200');
   });
 });
 

@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -16,19 +16,22 @@ import {
 
 export function Register() {
   const [date, setDate] = React.useState<Date>();
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     gender: "",
-    telephone: ""
+    telephone: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -41,10 +44,12 @@ export function Register() {
 
     try {
       const response = await axios.post("http://localhost:3000/register", data);
-      console.log("Usuário registrado com sucesso:", response.data);
+      if (response.data == "200") {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Erro ao registrar usuário:");
-      alert('Erro ao registrar usuário');
+      alert("Erro ao registrar usuário");
     }
   };
 
@@ -56,22 +61,42 @@ export function Register() {
           <div className="flex gap-3 w-full">
             <div>
               <p>First Name</p>
-              <Input name="firstName" placeholder="Enter your first name" value={formData.firstName} onChange={handleChange} />
+              <Input
+                name="firstName"
+                placeholder="Enter your first name"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
             </div>
             <div>
               <p>Last Name</p>
-              <Input name="lastName" placeholder="Enter your last name" value={formData.lastName} onChange={handleChange} />
+              <Input
+                name="lastName"
+                placeholder="Enter your last name"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div className="w-full flex flex-col gap-2">
             <div>
               <p>E-mail</p>
-              <Input name="email" placeholder="Enter your e-mail" value={formData.email} onChange={handleChange} />
+              <Input
+                name="email"
+                placeholder="Enter your e-mail"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
 
             <div>
               <p>Password</p>
-              <Input name="password" placeholder="Enter your password" value={formData.password} onChange={handleChange} />
+              <Input
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="flex gap-2">
@@ -103,7 +128,12 @@ export function Register() {
 
               <div className="w-full">
                 <p>Gender</p>
-                <select name="gender" className="w-full border rounded-md px-3 py-1 h-[36px] input" value={formData.gender} onChange={handleChange}>
+                <select
+                  name="gender"
+                  className="w-full border rounded-md px-3 py-1 h-[36px] input"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
                   <option value="" disabled>
                     Select
                   </option>
@@ -114,12 +144,21 @@ export function Register() {
             </div>
             <div>
               <p>Telephone</p>
-              <Input name="telephone" placeholder="Enter your telephone" value={formData.telephone} onChange={handleChange} />
+              <Input
+                name="telephone"
+                placeholder="Enter your telephone"
+                value={formData.telephone}
+                onChange={handleChange}
+              />
             </div>
-            <Button type="submit" className="mt-3 bg-easy text-white">Save</Button>
+            <Button type="submit" className="mt-3 bg-easy text-white">
+              Save
+            </Button>
             <div className="flex gap-2 justify-center">
               <p>Already have an account?</p>
-              <Link to="/" className="text-blue-600 underline">Login</Link>
+              <Link to="/" className="text-blue-600 underline">
+                Login
+              </Link>
             </div>
           </div>
         </form>
