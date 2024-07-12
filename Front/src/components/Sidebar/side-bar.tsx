@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Profile } from "../profile";
 import logo from "../../img/logoo-new-png.png";
 import "./side-bar.css";
-import { Button } from "../ui/button";
 import { Link, useParams } from "react-router-dom";
 import {
   LogOut,
