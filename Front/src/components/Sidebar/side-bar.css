@@ -15,8 +15,7 @@
 .close .side-top .logo-name,
 .close .side-top img,
 .close .side-mid ul li span,
-.close .side-bot .user-name,
-.close .side-bot .logout {
+.close .side-bot .user-name {
   display: none;
 }
 .side-top {
@@ -85,12 +84,14 @@
 
 .side-bot {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80px;
+  height: 150px;
   gap: 10px;
   width: 100%;
   margin-top: auto;
+  padding: 10px;
 }
 
 .avatar * {
@@ -99,7 +100,7 @@
   border-radius: 100%;
 }
 
-.close .avatar{
+.close .avatar {
   margin-left: 11%;
 }
 
@@ -111,6 +112,27 @@
   text-transform: capitalize;
 }
 
-.side-bot .logout {
-  color: white;
+.close .logout {
+  margin-top: 10px;
+  width: 55px;
+  border: none;
+  background-color: transparent;
+}
+.close .user-info{
+  display: none;
+}
+.close .side-bot{
+  padding-top: 50px;
+}
+.logout {
+  display: flex;
+  width: 8rem;
+  justify-content: center;
+  padding: 2px;
+  border-color: rgb(255, 255, 255);
+  border-width: 1px;
+  border-radius: 10px;
+}
+.close .logout span {
+  display: none;
 }

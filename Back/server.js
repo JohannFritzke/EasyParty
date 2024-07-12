@@ -2,6 +2,8 @@ const express = require('express');
 const connection = require('./db.js'); // Certifique-se de que este caminho está correto
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
+const e = require('express');
 
 const app = express();
 app.use(cors());
@@ -13,7 +15,7 @@ app.post('/login', (req, res) => {
   connection.query(query, [username, password], (err, results) => {
     if (err) throw err;
     if (results.length > 0) {
-      res.json({ success: true, message: 'Login successful!' });
+      res.json({ success: true, message: 'Login successful!', id: results[0].id });
     } else {
       res.json({ success: false, message: 'Invalid credentials!' });
     }
@@ -64,14 +66,15 @@ app.get('/get-events-user', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  const { firstName, lastName, dateOfBirth, email, gender, password, telephone} = req.body;
-  if(dateOfBirth == null){dateOfBirth=""}
-  const tipo="admin"
+  const { firstName, lastName, dateOfBirth, email, gender, password, telephone } = req.body;
+  if (dateOfBirth == null) { dateOfBirth = "" }
+  const tipo = "admin"
+  let uuid = uuidv4()
   const query = `
-    INSERT INTO users (firstName, lastName, dateOfBirth, email, gender, password, telephone,tipo)
-    VALUES (?,?,?,?,?,?,?,?)
+    INSERT INTO users (id,firstName, lastName, dateOfBirth, email, gender, password, telephone,tipo)
+    VALUES (?,?,?,?,?,?,?,?,?)
   `;
-  connection.query(query, [firstName, lastName, dateOfBirth, email, gender, password, telephone,tipo], (err, result) => {
+  connection.query(query, [uuid, firstName, lastName, dateOfBirth, email, gender, password, telephone, tipo], (err, result) => {
     if (err) {
       console.error('Erro ao adicionar o usuario:', err);
       return res.status(500).send('Erro ao adicionar o usuario');
@@ -80,7 +83,21 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.get('/get-user', (req, res) => {
+  const query = 'SELECT * FROM users WHERE id = ?';
+  const {id}=req.query;
+  console.log(id)
+  connection.query(query,[id], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar usuairo!!!');
+      return;
+    }else{
+      console.log(results)
+      res.json(results);
+    }
+  });
 
+});
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });

@@ -22,7 +22,8 @@ export function LoginPage() {
       });
       setMessage(response.data.message);
       if (response.data.success) {
-        navigate(`/${username}`);
+        console.log(response.data)
+        navigate(`/${response.data.id}`);
       }
     } catch (error) {
       setMessage("Erro ao conectar ao servidor");

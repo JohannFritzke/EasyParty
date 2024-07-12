@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Profile } from "../profile";
 import logo from "../../img/logoo-new-png.png";
 import "./side-bar.css";
+import { Button } from "../ui/button";
 import { Link, useParams } from "react-router-dom";
 import {
   LogOut,
@@ -14,11 +15,25 @@ import {
   Settings,
 } from "lucide-react";
 import { EventLister } from "../event-lister";
+import axios from "axios";
+
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  email: string;
+  gender: string;
+  password: string;
+  telephone: string;
+  tipo: string;
+}
 
 export function Sidebar() {
   const [isSidebarClosed, setSidebarClosed] = useState(true);
-  const { userName } = useParams<{ userName: string }>();
-
+  const [userData, setUserData] = useState<User | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const userName = userData ? `${userData.firstName}${userData.lastName}` : "";
   const getInitials = (name: string) => {
     const [firstName, lastName] = name.split(" ");
     const initials = firstName.charAt(0) + (lastName ? lastName.charAt(0) : "");
@@ -32,6 +47,15 @@ export function Sidebar() {
   const sidebarClass = `sidebar bg-background ${
     isSidebarClosed ? "close" : "open"
   }`;
+
+  const fetchUser = async () => {
+    const response = await axios.get(`http://localhost:3000/get-user?id=${id}`);
+    setUserData(response.data[0]);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <div className={sidebarClass}>
@@ -65,7 +89,7 @@ export function Sidebar() {
               </li>
             </DialogTrigger>
             <DialogContent className="max-w-[55%]">
-              <EventLister/>
+              <EventLister />
             </DialogContent>
           </Dialog>
 
@@ -90,7 +114,7 @@ export function Sidebar() {
                 <span>Configurações</span>
               </li>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="h-[300px]">
               <Profile />
             </DialogContent>
           </Dialog>
@@ -98,7 +122,7 @@ export function Sidebar() {
       </div>
 
       <div className="side-bot">
-        <Avatar className="">
+        <Avatar className="rounded-full">
           <AvatarImage
             src={`https://github.com/${userName}.png`}
             className=""
@@ -107,12 +131,19 @@ export function Sidebar() {
             {getInitials(userName ? getInitials(userName) : "")}
           </AvatarFallback>
         </Avatar>
-        <span className="user-name font-family">{userName}</span>
-        <Link to="/">
-          <span className="cursor-pointer">
-            <LogOut className="logout" />
-          </span>
-        </Link>
+        <div className="flex flex-col items-center user-info">
+          <div className="flex gap-1 capitalize text-white font-bold">
+            <span>{userData?.firstName}</span>
+            <span>{userData?.lastName}</span>
+          </div>
+          <span className="text-[10px] text-white">{userData?.email}</span>
+        </div>
+        <div className="logout">
+          <Link to="/" className="flex gap-1 text-white ">
+            <span className="cursor-pointe font-bold">Log out</span>
+            <LogOut />
+          </Link>
+        </div>
       </div>
     </div>
   );
