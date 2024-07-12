@@ -105,15 +105,15 @@ export function AddParty({ onClose, onAddEvent }: AddPartyProps) {
     <>
       <Dialog open={true} onOpenChange={onClose}>
         <DialogContent className="flex flex-col items-center w-[100rem]">
-          <h1>Adicionar um novo Evento</h1>
+          <h1 className="font-bold">Add a new Event</h1>
           <form onSubmit={handleSubmit} className="flex flex-col w-[85%]">
             <div className="flex w-full justify-between">
               <div>
-                <p>Nome do Evento</p>
-                <Input name="nomeDoEvento" placeholder="Nome do Evento" />
+                <p>Event Name</p>
+                <Input name="nomeDoEvento" placeholder="Event Name" />
               </div>
               <div>
-                <p>Data do Evento</p>
+                <p>Date of the event</p>
                 <input
                   name="dataDoEvento"
                   type="datetime-local"
@@ -126,35 +126,35 @@ export function AddParty({ onClose, onAddEvent }: AddPartyProps) {
 
             <div className="mt-2">
               <div>
-                <p>CEP</p>
+                <p>Zip code</p>
                 <Input
-                  placeholder="Informe o CEP"
+                  placeholder="Enter your zip code"
                   value={address.cep}
                   onChange={handleCepChange}
                 />
               </div>
               <div className="flex gap-1 mt-2">
                 <div>
-                  <p>Bairro</p>
+                  <p>Neighborhood</p>
                   <Input
-                    placeholder="Bairro"
+                    placeholder="Neighborhood"
                     value={address.neighborhood}
                     readOnly
                   />
                 </div>
                 <div>
-                  <p>Cidade</p>
-                  <Input placeholder="Cidade" value={address.city} readOnly />
+                  <p>City</p>
+                  <Input placeholder="City" value={address.city} readOnly />
                 </div>
                 <div>
-                  <p>Estado</p>
+                  <p>State</p>
                   <select
                     value={address.state}
                     onChange={handleStateChange}
                     className="w-[100px] border rounded-md px-3 py-1 h-[36px] input"
                   >
                     <option value="" disabled>
-                      Selecione
+                      Select
                     </option>
                     {est.estadosBrasil.map((estado: string) => (
                       <option key={estado} value={estado}>
@@ -167,14 +167,14 @@ export function AddParty({ onClose, onAddEvent }: AddPartyProps) {
 
               <div className="flex gap-6 mt-2">
                 <div>
-                  <p>Rua</p>
-                  <Input placeholder="Rua" value={address.street} readOnly />
+                  <p>Road</p>
+                  <Input placeholder="Road" value={address.street} readOnly />
                 </div>
                 <div>
-                  <p>Número</p>
+                  <p>Number</p>
                   <Input
                     name="numero"
-                    placeholder="Número"
+                    placeholder="Number"
                     value={number}
                     onChange={handleNumberChange}
                   />

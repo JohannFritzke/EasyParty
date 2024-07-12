@@ -72,7 +72,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <HandHeart />
-                <span>Para você</span>
+                <span>For You</span>
               </li>
             </DialogTrigger>
             <DialogContent></DialogContent>
@@ -84,7 +84,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <PartyPopper />
-                <span>Suas Festas</span>
+                <span>Your Parties</span>
               </li>
             </DialogTrigger>
             <DialogContent className="max-w-[55%]">
@@ -98,7 +98,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <Star />
-                <span>Favoritos</span>
+                <span>Favorites</span>
               </li>
             </DialogTrigger>
             <DialogContent></DialogContent>
@@ -110,7 +110,7 @@ export function Sidebar() {
             <DialogTrigger>
               <li>
                 <Settings />
-                <span>Configurações</span>
+                <span>Settings</span>
               </li>
             </DialogTrigger>
             <DialogContent className="h-[300px]">

@@ -93,6 +93,7 @@ export function Register() {
               <p>Password</p>
               <Input
                 name="password"
+                type="password"
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}

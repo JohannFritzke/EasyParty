@@ -48,13 +48,13 @@ export function EventLister() {
 
   return (
     <Table>
-      <TableCaption>Suas Festas</TableCaption>
+      <TableCaption>Your Parties</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Nome do Evento</TableHead>
-          <TableHead>Data do Evento</TableHead>
-          <TableHead>Endereço</TableHead>
-          <TableHead>Ações</TableHead>
+          <TableHead>Event Name</TableHead>
+          <TableHead>Date of the event</TableHead>
+          <TableHead>Address</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
