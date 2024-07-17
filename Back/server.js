@@ -52,10 +52,10 @@ app.get('/get-events', (req, res) => {
 });
 
 app.get('/get-events-user', (req, res) => {
-  const { userName } = req.query; // Recebe o nome do usuário via query string
+  const { id } = req.query; // Recebe o nome do usuário via query string
   // Query SQL modificada para filtrar eventos por usuário
   const query = 'SELECT * FROM eventos WHERE user = ?';
-  connection.query(query, [userName], (err, results) => {
+  connection.query(query, [id], (err, results) => {
     if (err) {
       console.error('Erro ao buscar eventos:', err);
       res.status(500).json({ error: 'Erro ao buscar eventos' });
@@ -85,19 +85,31 @@ app.post('/register', (req, res) => {
 
 app.get('/get-user', (req, res) => {
   const query = 'SELECT * FROM users WHERE id = ?';
-  const {id}=req.query;
-  console.log(id)
-  connection.query(query,[id], (err, results) => {
+  const { id } = req.query;
+  connection.query(query, [id], (err, results) => {
     if (err) {
       console.error('Erro ao buscar usuairo!!!');
       return;
-    }else{
-      console.log(results)
+    } else {
       res.json(results);
     }
   });
 
 });
+
+app.delete('/delete-event', (req, res) => {
+  const { id } = req.query;
+  const query = 'DELETE FROM eventos WHERE id = ?';
+  connection.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Erro ao deletar evento!!!'+err);
+      return;
+    } else {
+      res.json(results);
+    }
+  })
+});
+
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });

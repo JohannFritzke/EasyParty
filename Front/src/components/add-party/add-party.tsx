@@ -25,7 +25,7 @@ export function AddParty({ onClose, onAddEvent }: AddPartyProps) {
   });
 
   const [number, setNumber] = useState("");
-  const user = useParams<{ userName: string }>();
+  const id = useParams<{ id: string }>();
 
   const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const cep = e.target.value;
@@ -85,7 +85,7 @@ export function AddParty({ onClose, onAddEvent }: AddPartyProps) {
           number,
           lat: response.data[0].lat,
           lng: response.data[0].lon,
-          user: user.userName,
+          user: id.id,
         };
 
         await axios.post("http://localhost:3000/adicionar-evento", eventInfo);

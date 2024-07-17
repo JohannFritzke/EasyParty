@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/popover";
 
 export function Register() {
-  const [date, setDate] = React.useState<Date>();
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     firstName: "",
@@ -24,6 +23,7 @@ export function Register() {
     password: "",
     gender: "",
     telephone: "",
+    dateOfBirth: "",
   });
 
   const handleChange = (
@@ -37,10 +37,9 @@ export function Register() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
-      ...formData,
-      dateOfBirth: date?.toISOString(), // Convertendo a data para string
-    };
+    const data = formData;
+
+    console.log(formData);
 
     try {
       const response = await axios.post("http://localhost:3000/register", data);
@@ -83,6 +82,7 @@ export function Register() {
               <p>E-mail</p>
               <Input
                 name="email"
+                type="email"
                 placeholder="Enter your e-mail"
                 value={formData.email}
                 onChange={handleChange}
@@ -103,28 +103,13 @@ export function Register() {
             <div className="flex gap-2">
               <div>
                 <p>Date of birth</p>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[200px] justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <Input
+                  type="date"
+                  name="dateOfBirth"  
+                  value={formData.dateOfBirth}
+                  className="uppercase"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="w-full">

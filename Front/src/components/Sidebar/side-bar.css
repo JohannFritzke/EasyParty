@@ -136,3 +136,12 @@
 .close .logout span {
   display: none;
 }
+
+.gradient-text {
+  font-size: 20px; /* Ajuste o tamanho da fonte conforme necessário */
+  font-weight: bold; /* Ajuste o peso da fonte conforme necessário */
+  background: linear-gradient(90deg, rgba(238, 37, 37, 1) 0%, rgba(253, 187, 45, 1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+

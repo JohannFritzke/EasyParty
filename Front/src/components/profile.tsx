@@ -63,7 +63,7 @@ export function Profile() {
           </Avatar>
         </div>
 
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-2">
           <div className="flex gap-1 capitalize">
             <span className="font-bold">Name:</span>
             <span>{`${userData?.firstName} ${userData?.lastName}`}</span>
@@ -79,7 +79,7 @@ export function Profile() {
             <span>{userData?.email}</span>
           </div>
 
-          <div className="flex gap-1">
+          <div className="flex gap-1 capitalize">
             <span className="font-bold">Gender:</span>
             <span>{userData?.gender}</span>
           </div>

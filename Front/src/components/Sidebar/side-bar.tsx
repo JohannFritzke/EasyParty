@@ -60,7 +60,7 @@ export function Sidebar() {
     <div className={sidebarClass}>
       <div className="side-top">
         <img src={logo} alt="" className="side-img" />
-        <span className="font logo-name">EasyParty</span>
+        <span className="font logo-name gradient-text">EasyParty</span>
         <span className="menu" onClick={toggleSidebar}>
           <Menu />
         </span>

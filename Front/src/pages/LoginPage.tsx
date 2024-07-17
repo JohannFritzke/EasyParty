@@ -32,7 +32,7 @@ export function LoginPage() {
 
 
   return (
-    <div className="background-login w-full h-screen flex justify-center items-center">
+    <div className="background-login w-full h-screen flex justify-center items-center m-0">
       <Card className="w-[768px] flex h-[400px] text-black border-white bg-white">
         <CardContent className="flex flex-col justify-center items-center w-full gap-[20px]">
           <h1 className="font-600 text-3xl">Sign In</h1>
