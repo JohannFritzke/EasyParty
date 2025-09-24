@@ -10,7 +10,6 @@ O **EasyParty** é uma aplicação web que tem como objetivo facilitar a organiz
 - [Instalação](#instalação)  
 - [Uso](#uso)  
 - [Estrutura de Pastas](#estrutura-de-pastas)  
-- [Contribuição](#contribuição)  
 - [Licença](#licença)  
 - [Contato](#contato)
 
@@ -40,7 +39,8 @@ Este projeto utiliza as seguintes tecnologias:
 - **TypeScript**  
 - **JavaScript**  
 - **CSS**  
-- (Adicione frameworks/libraries específicas caso aplicável, ex.: React, Node.js, Express etc.)
+- **React**
+- **Shadcn/UI**  
 
 ---
 
@@ -66,6 +66,8 @@ yarn install
 npm start
 # ou
 yarn start
+
+# OBS: deve ser feito o mesmo nas 2 pastas tanto na back-end quanto front-end
 ```
 
 ---
@@ -97,21 +99,9 @@ EasyParty/
 
 ---
 
-## Contribuição
-
-Contribuições são sempre bem-vindas!
-
-1. Faça um fork do projeto  
-2. Crie uma branch para sua feature: `git checkout -b minha-feature`  
-3. Faça commits claros: `git commit -m 'Adicionei nova feature'`  
-4. Envie para o repositório remoto: `git push origin minha-feature`  
-5. Abra um Pull Request
-
----
-
 ## Licença
 
-Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este é um projeto acadêmico desenvolvido como trabalho final do curso. O código é disponibilizado para fins educacionais e de portfólio.
 
 ---
 
